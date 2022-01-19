@@ -1,0 +1,50 @@
+{
+    "DIRS":{
+        "NPZ_DATA_DIR" : "../data/npz",
+        "TRAIN_DATA_DIR" : "../data/train_data",
+        "TEST_DATA_DIR" : "../data/test_data",
+        "JSON_OUTPUT_DIR" : "../result/json",
+        "RECON_OUTPUT_DIR" : "../result/recon_img",
+        "SCORE_OUTPUT_DIR" : "../result/score",
+        "NPZ_OUTPUT_DIR" : "../result/npz/recon_data",
+        "LOSS_PLOT_OUTPUT_DIR" : "../result/loss_plot"
+    },
+    "FILES":{
+        "CSV_DATA_FILE_FOR_QE" : "../data/csv/test.xlsx",
+        "CSV_DATA_FILE_FOR_MDS" : "../data/csv/test.xlsx",
+        "PREPROCESSED_DICTIONARY_PATH" : "../result/npz/recon_data/test.npz"
+    },
+    "DR":{
+        "DATA_NAME" : "rgb",
+        "DR_TYPE" : "UMAP",
+        "DATA_PHOTO_TYPE" : "rgb",
+        "IS_USE_HSV_VALUE" : false,
+        "IS_USE_GRAYSCALE" : false,
+        "RELOAD_IMAGES" : true,
+        "IMAGE_SCALE" : {
+            "WIDTH" : 0.2, 
+            "HEIGHT": 0.2
+        }
+    },
+    "PREFERENCE":{
+        "IS_USE_PREPROCESSED_DICTIONARY" : true,
+        "IS_CHECK_MORPHING" : true,
+        "IS_QUANTITATIVE_EVALUATION" : false,
+        "IS_CALC_CORANKING_MATRIX" : false,
+        "IS_ACTIVATE_PLOTLY" : true
+    },
+    "DL":{
+        "REPROCESS_NEW_COORDINATES" : [],
+        "K" : 80,
+        "TAU" : 5,
+        "MU" : 0.05,
+        "LMD" : 0.5,
+        "TOL": 0.1,
+        "EPOCHS" : 100
+    },
+    "QE":{
+        "DELETE_LABELS" : [],
+        "DELETE_INDICES" : [],
+        "SCORE_ITEMS" : []
+    }
+}
