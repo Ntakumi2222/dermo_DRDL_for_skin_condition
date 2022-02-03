@@ -12,31 +12,32 @@
     "FILES":{
         "CSV_DATA_FILE_FOR_QE" : "../data/csv/test.xlsx",
         "CSV_DATA_FILE_FOR_MDS" : "../data/csv/test.xlsx",
-        "PREPROCESSED_DICTIONARY_PATH" : "../result/npz/recon_data/test.npz"
+        "PREPROCESSED_DICTIONARY_PATH" : "../result/npz/recon_data/MNIST_UMAP_20220203-134902.npz"
     },
     "DR":{
-        "DATA_NAME" : "rgb",
+        "DATA_NAME" : "MNIST",
         "DR_TYPE" : "UMAP",
         "DATA_PHOTO_TYPE" : "rgb",
         "IS_USE_HSV_VALUE" : false,
         "IS_USE_GRAYSCALE" : false,
         "RELOAD_IMAGES" : true,
         "IMAGE_SCALE" : {
-            "WIDTH" : 0.2, 
-            "HEIGHT": 0.2
+            "WIDTH" : 1.0, 
+            "HEIGHT": 1.0
         }
     },
     "PREFERENCE":{
-        "IS_USE_PREPROCESSED_DICTIONARY" : true,
-        "IS_CHECK_MORPHING" : true,
+        "IS_USE_PREPROCESSED_DICTIONARY" : false,
+        "IS_CHECK_MORPHING" : false,
         "IS_QUANTITATIVE_EVALUATION" : false,
-        "IS_CALC_CORANKING_MATRIX" : false,
-        "IS_ACTIVATE_PLOTLY" : true
+        "IS_CALC_CORANKING_MATRIX" : true,
+        "IS_ACTIVATE_PLOTLY" : true,
+        "IS_DEMO": true
     },
     "DL":{
         "REPROCESS_NEW_COORDINATES" : [],
-        "K" : 80,
-        "TAU" : 5,
+        "K" : 100,
+        "TAU" : 10,
         "MU" : 0.05,
         "LMD" : 0.5,
         "TOL": 0.1,
