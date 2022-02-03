@@ -8,8 +8,9 @@ class ImageWriter:
         self.image_labels = image_labels
         self.image_paths = image_paths
         self.output_dir = output_dir
+        self._imwrite()
 
-    def imwrite(self):
+    def _imwrite(self):
         print(self.images.shape)
         for index, image in enumerate(self.images):
             output_path = os.path.join(self.output_dir, self.image_labels[index], self.image_paths[index])

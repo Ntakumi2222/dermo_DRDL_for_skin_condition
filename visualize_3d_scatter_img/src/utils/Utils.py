@@ -137,11 +137,11 @@ def get_time_stamp():
     return ts
 
 
-def save_npz(DATA_TYPE, DR_TYPE, images, train_mean_image, train_data_original_shape, mapped_points, image_labels, image_paths, d_high, d_low, USER_PREF):
+def save_npz(analysis_data, USER_PREF):
     os.makedirs(USER_PREF.NPZ_OUTPUT_DIR, exist_ok=True)
     np.savez(os.path.join(USER_PREF.NPZ_OUTPUT_DIR,
-             f'{DATA_TYPE}_{DR_TYPE.name}_{USER_PREF.TIME_STAMP}'),
-             images=images, train_mean_image=train_mean_image, train_data_original_shape=train_data_original_shape, mapped_points=mapped_points, image_labels=image_labels, image_paths=image_paths, d_high=d_high, d_low=d_low)
+             f'{USER_PREF.DATA_NAME}_{USER_PREF.DR_TYPE.name}_{USER_PREF.TIME_STAMP}'),
+             images=analysis_data.images, train_mean_image=analysis_data.train_mean_image, train_data_original_shape=analysis_data.train_data_original_shape, mapped_points=analysis_data.mapped_points, image_labels=analysis_data.image_labels, image_paths=analysis_data.image_paths, d_high=analysis_data.d_high, d_low=analysis_data.d_low)
     pass
 
 
