@@ -1,6 +1,8 @@
 # for Directory
 data/train_data
 data/test_data
+data/csv
+data/npz
 result
 MNIST
 # for mac
