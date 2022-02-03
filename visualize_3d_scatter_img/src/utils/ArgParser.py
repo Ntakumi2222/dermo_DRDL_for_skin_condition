@@ -1,10 +1,10 @@
-import argparse    # 1. argparseをインポート
+import argparse
 
 
 class ArgParser:
     def __init__(self) -> None:
         parser = argparse.ArgumentParser(
-            description='jsonを設定してください')
+            description='specify a json file')
         parser.add_argument('--json', default='../data/json/settings.json')
         args = parser.parse_args()
         self.json_file = args.json

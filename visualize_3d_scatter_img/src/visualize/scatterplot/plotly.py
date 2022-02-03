@@ -1,12 +1,12 @@
 import plotly.express as px
 import plotly.offline as offline
 import pandas as pd
-from ipywidgets import HTML, Image, Layout, HBox, VBox, interactive
+from ipywidgets import HTML, Image, Layout,  interactive
 from src.utils.Utils import *
 
 
 class PlotlyLabeler3D(object):
-    def __init__(self, data, embedding, labels, paths, data_type, dr_type):
+    def __init__(self, data, embedding, labels, paths, data_type, dr_type, time_stamp):
         self.data = data
         self.embedding = embedding
         self.labels = labels
@@ -28,7 +28,8 @@ class PlotlyLabeler3D(object):
         self.opacity_slider = interactive(self.set_opacity,
                                           opacity=(0.0, 1.0, 0.01),
                                           size=(1, 10, 0.25))
-
+        self.time_stamp = time_stamp
+        
     def set_opacity(self, opacity, size):
         self.fig.marker.opacity = opacity
         self.fig.marker.size = size
@@ -38,7 +39,7 @@ class PlotlyLabeler3D(object):
                                  color='label', opacity=0.7, size='size', size_max=5, hover_name="index",
                                  hover_data=["label", "path"])
 
-        offline.plot(self.fig, filename=f'../result/html/{self.data_type}_{self.dr_type}_{get_TIME_STAMP()}.html',
+        offline.plot(self.fig, filename=f'../result/html/{self.data_type}_{self.dr_type}_{self.time_stamp}.html',
                      auto_open=True)
 
     def hover_fn(self, points, state):

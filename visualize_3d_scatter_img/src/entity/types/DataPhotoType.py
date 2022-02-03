@@ -6,4 +6,3 @@ class DataPhotoType(Enum):
     POL = 'pol'
     UV = 'uv'
     CONCATE = 'concate'
-    DWE = 'dwe'
