@@ -1,5 +1,6 @@
 import cv2
 import io
+import json
 import numpy as np
 import os
 import PIL.Image
@@ -12,7 +13,6 @@ from matplotlib import pyplot as plt
 from pytz import timezone
 
 from src.model.QuantitativeEvaluation.CorankingMatrix import CoRankingMatrix
-from src.settings import  get_TIME_STAMP
 
 """
 class part
@@ -41,12 +41,9 @@ class Timer:
 
 
 class Singleton(object):
-    @classmethod
-    def get_instance(cls, input):
+    def __new__(cls, *args, **kargs):
         if not hasattr(cls, "_instance"):
-            cls._instance = cls(input)
-        else:
-            cls._instance.input = input
+            cls._instance = super(Singleton, cls).__new__(cls)
         return cls._instance
 
 
@@ -165,30 +162,42 @@ def save_mnist_for_train_test():
     test_dataset = datasets.MNIST(root=rootdir, train=False, download=True)
 
     print("Save image as train")
-    number = 0
-    for img, label in tqdm.tqdm(train_dataset):
-        savedir = traindir + "/" + str(label)
-        os.makedirs(savedir, exist_ok=True)
-        savepath = savedir + "/" + str(number).zfill(5) + ".png"
-        img.save(savepath)
-        number = number + 1
+    dict_mnist_count = {0: 0, 1: 0, 2: 0, 3: 0,
+                        4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
+    train_tol = 100
+    for img, label in train_dataset:
+        if dict_mnist_count[label] < train_tol:
+            dict_mnist_count[label] += 1
+            savedir = os.path.join(traindir , str(label))
+            os.makedirs(savedir, exist_ok=True)
+            savepath = os.path.join(savedir, str(
+                dict_mnist_count[label]).zfill(5) + ".png")
+            img.save(savepath)
+        else:
+            continue
 
     print("Save image as test")
-    number = 0
-    for img, label in tqdm.tqdm(test_dataset):
-        savedir = testdir + "/" + str(label)
-        os.makedirs(savedir, exist_ok=True)
-        savepath = savedir + "/" + str(number).zfill(5) + ".png"
-        img.save(savepath)
-        number = number + 1
+    dict_mnist_count = {0: 0, 1: 0, 2: 0, 3: 0,
+                        4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
+    test_tol = 10
+    for img, label in test_dataset:
+        if dict_mnist_count[label] < test_tol:
+            dict_mnist_count[label] += 1
+            savedir = os.path.join(testdir, f'{str(label)}_test')
+            os.makedirs(savedir, exist_ok=True)
+            savepath = os.path.join(savedir,
+                                    str(dict_mnist_count[label]).zfill(5) + ".png")
+            img.save(savepath)
+        else:
+            continue
 
 
 def save_d_c_loss_fig(d_loss, c_loss, USER_PREF):
     plt.plot(range(len(d_loss)), d_loss,
-                marker="o", color="red", linestyle="--", label='D loss')
+             marker="o", color="red", linestyle="--", label='D loss')
     plt.plot(range(len(c_loss)), c_loss,
-                marker="v", color="blue", linestyle=":", label='C loss')
-    plt.title('d_loss and c_loss per epoch')
+             marker="v", color="blue", linestyle=":", label='C loss')
+    plt.title('D loss and C loss per epoch')
     plt.xlabel("epoch")
     plt.ylabel("loss(log)")
     plt.yscale('log')

@@ -11,8 +11,8 @@ class UserPref(Singleton):
     """[summary]
     Uneditable class. Singleton class for global variables
     """
-    def __init__(self, json_file_path) -> None:
-        json_open = open(json_file_path, 'r')
+    def __init__(self, json_file) -> None:
+        json_open = open(json_file, 'r')
         json_load = json.load(json_open)
         self.NPZ_DATA_DIR = json_load['DIRS']['NPZ_DATA_DIR']
         self.TRAIN_DATA_DIR = json_load['DIRS']['TRAIN_DATA_DIR']
@@ -43,10 +43,10 @@ class UserPref(Singleton):
         self.IS_CALC_CORANKING_MATRIX = json_load['PREFERENCE']['IS_CALC_CORANKING_MATRIX']
         self.IS_ACTIVATE_PLOTLY = json_load['PREFERENCE']['IS_ACTIVATE_PLOTLY']
         self.IS_DEMO = json_load['PREFERENCE']['IS_DEMO']
-         
+
         # coordinates_name系は全て一意な値にしてください
         self.REPROCESS_NEW_COORDINATES = np.asarray(
-                json_load['DL']['REPROCESS_NEW_COORDINATES'])
+            json_load['DL']['REPROCESS_NEW_COORDINATES'])
         self.K = json_load['DL']['K']
         self.TAU = json_load['DL']['TAU']
         self.MU = json_load['DL']['MU']

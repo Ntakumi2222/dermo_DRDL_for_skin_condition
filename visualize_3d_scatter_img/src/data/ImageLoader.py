@@ -62,6 +62,7 @@ class ImageLoader:
             self.mean_image = self.image_list.mean(axis=0)
             self.image_list = self.image_list - self.mean_image
             print(f'Data Shape:{self.image_list.shape}')
+            os.makedirs(os.path.dirname(npz_file_path_basename), exist_ok=True)
             np.savez(npz_file_path_basename,
                      image_list=self.image_list,
                      image_file_path_list=self.image_file_path_list,

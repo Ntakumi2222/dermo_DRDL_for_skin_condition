@@ -1,6 +1,6 @@
-from types import new_class
 import numpy as np
 import os
+
 from src.model.DL.DLPreProcess import DLPreProcess
 from src.data.ImageLoader import ImageLoader
 from src.data.ImageWriter import ImageWriter
@@ -21,7 +21,9 @@ from src.utils.Utils import save_mnist_for_train_test, load_d_low_d, save_d_c_lo
 def main():
     # Read json and set global variables
     arg_parser = ArgParser()
-    USER_PREF = UserPref(arg_parser.get_json_file)
+    json_file = arg_parser.get_json_file()
+    USER_PREF = UserPref(json_file)
+    
     # MNIST will be downloaded if you use the MNIST DEMO
     if USER_PREF.IS_DEMO:
         save_mnist_for_train_test()
@@ -105,7 +107,7 @@ def process(USER_PREF):
         load_d_low_d(USER_PREF)
     else:
         dl_preprocess = DLPreProcess(
-            x_train=images, y_train=mapped_points, tau=USER_PREF.TAU, lmd=USER_PREF.LMD, mu=USER_PREF.MU, tol=USER_PREF.TOL, k=USER_PREF.K, count=USER_PREF.EPOCHS)
+            x_train=images, y_train=mapped_points, tau=USER_PREF.TAU, lmd=USER_PREF.LMD, mu=USER_PREF.MU, tol=USER_PREF.TOL, k=USER_PREF.K, epoch=USER_PREF.EPOCHS)
         d_low, d_high = dl_preprocess.get_d_low_d()
         d_loss, c_loss = dl_preprocess.get_d_loss_c_loss()
         save_d_c_loss_fig(d_loss=d_loss, c_loss=c_loss, USER_PREF=USER_PREF)
@@ -155,7 +157,7 @@ def process(USER_PREF):
 
     if USER_PREF.IS_ACTIVATE_PLOTLY:
         labeler = PlotlyLabeler3D(
-            images, mapped_points, image_labels, image_paths, USER_PREF.DATA_NAME, USER_PREF.DR_TYPE.name)
+            images, mapped_points, image_labels, image_paths, USER_PREF.DATA_NAME, USER_PREF.DR_TYPE.name, USER_PREF.TIME_STAMP)
     else:
         labeler = Labeler3D(images, mapped_points, image_labels)
     labeler.start()
@@ -170,7 +172,7 @@ def process(USER_PREF):
     image_writer.imwrite()
 
     save_npz(USER_PREF.DATA_NAME, USER_PREF.DR_TYPE, images, train_mean_image, train_data_original_shape,
-             mapped_points, image_labels, image_paths, d_high, d_low)
+             mapped_points, image_labels, image_paths, d_high, d_low, USER_PREF)
 
 
 def reprocess(USER_PREF):
@@ -270,7 +272,7 @@ def reprocess(USER_PREF):
     print(recons.shape)
     if USER_PREF.IS_ACTIVATE_PLOTLY:
         labeler = PlotlyLabeler3D(
-            images, mapped_points, image_labels, image_paths, USER_PREF.DATA_NAME, USER_PREF.DR_TYPE.name)
+            images, mapped_points, image_labels, image_paths, USER_PREF.DATA_NAME, USER_PREF.DR_TYPE.name, USER_PREF.TIME_STAMP)
     else:
         labeler = Labeler3D(images, mapped_points, image_labels)
     labeler.start()
@@ -284,7 +286,7 @@ def reprocess(USER_PREF):
                                image_paths=new_image_paths, output_dir=os.path.join(USER_PREF.RECON_OUTPUT_DIR, USER_PREF.DATA_NAME, USER_PREF.DR_TYPE.name, USER_PREF.TIME_STAMP))
     image_writer.imwrite()
     save_npz(USER_PREF.DATA_NAME, USER_PREF.DR_TYPE, images, train_mean_image, train_data_original_shape,
-             mapped_points, image_labels, image_paths, d_high, d_low)
+             mapped_points, image_labels, image_paths, d_high, d_low, USER_PREF)
 
 
 if __name__ == '__main__':

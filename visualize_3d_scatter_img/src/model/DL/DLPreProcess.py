@@ -1,14 +1,12 @@
 import copy
 import numpy as np
-import matplotlib.pyplot as plt
-
 
 class DLPreProcess:
     """
     ここでのx_train, y_trainは全て転置したものを使用する。
     """
 
-    def __init__(self, x_train, y_train, tau=5, lmd=0.1, mu=0.0001, tol=0.1, k=100, count=100) -> None:
+    def __init__(self, x_train, y_train, tau=5, lmd=0.1, mu=0.0001, tol=0.1, k=100, epoch=100) -> None:
         # Kは入力要素数以下でないければならない
         self._K = k
         self._x_train = x_train.T
@@ -24,14 +22,14 @@ class DLPreProcess:
         self._lmd = lmd
         self._mu = mu
         self._tol = tol
-        self._count = count
+        self._epoch = epoch
         self._d_loss = []
         self._c_loss = []
         self.process()
         
     def process(self):
         print('Process preprocessing dl')
-        _count = 0
+        _epoch = 0
         while np.max(np.abs(self._D1-self._d_high)) > self._tol or np.max(np.abs(self._C1-self._C)) > self._tol:
             self._d_high = copy.deepcopy(self._D1)
             self._C = copy.deepcopy(self._C1)
@@ -68,13 +66,11 @@ class DLPreProcess:
             diagele_usecoled = np.diag(1/_diagele[_usecol])
             self._D1[:, _usecol] = np.dot(
                 P_usecoled, diagele_usecoled)/(1+self._lmd)
-            _count = _count+1
-            print(f'count:{_count}')
-            print(f"D_diff{np.max(np.abs(self._D1-self._d_high))}")
-            print(f"C_diff{np.max(np.abs(self._C1-self._C))}")
+            _epoch = _epoch+1
+            print(f'epoch:{_epoch}/{self._epoch} D_loss{np.max(np.abs(self._D1-self._d_high))} C_loss{np.max(np.abs(self._C1-self._C))}')
             self._d_loss.append(np.max(np.abs(self._D1-self._d_high)))
             self._c_loss.append(np.max(np.abs(self._C1-self._C)))
-            if _count >= self._count:
+            if _epoch >= self._epoch:
                 break
         # fix the coefficient, learn the low dimensional diction %%%%%
         #  The square matrix of code C is often singular, so it is pseudo-inverse.

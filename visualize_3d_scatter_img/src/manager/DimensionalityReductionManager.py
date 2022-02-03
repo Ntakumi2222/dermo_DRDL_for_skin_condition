@@ -1,5 +1,3 @@
-
-
 from src.model.DR.DRModel import DRModel
 from src.model.QuantitativeEvaluation.CorankingMatrix import CoRankingMatrix
 
