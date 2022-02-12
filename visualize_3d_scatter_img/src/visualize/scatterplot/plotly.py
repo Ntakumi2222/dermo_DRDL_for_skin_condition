@@ -39,7 +39,7 @@ class PlotlyLabeler3D(object):
                                  color='label', opacity=0.7, size='size', size_max=5, hover_name="index",
                                  hover_data=["label", "path"])
         save_file_name = f'../result/html/{self.data_type}_{self.dr_type}_{self.time_stamp}.html'
-        os.makedirs(save_file_name, exist_ok=True)
+        os.makedirs(os.path.dirname(save_file_name), exist_ok=True)
         offline.plot(self.fig, filename=save_file_name,
                      auto_open=True)
 
