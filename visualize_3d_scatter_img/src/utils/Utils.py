@@ -146,6 +146,7 @@ def save_npz(analysis_data, USER_PREF):
 
 
 def save_json(file_name, json_load):
+    os.makedirs(os.path.dirname(file_name), exist_ok=True)
     with open(file_name, 'w') as f:
         json.dump(json_load, f, indent=4, ensure_ascii=False)
 

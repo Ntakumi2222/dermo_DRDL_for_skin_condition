@@ -5,6 +5,8 @@ data/csv
 data/npz
 result
 MNIST
+**/__pycache/__
+
 # for mac
 # General
 .DS_Store
