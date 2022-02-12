@@ -89,8 +89,9 @@ def calc_coranking_matrix(data, embeddings, data_type, dr_type, kappa_s, kappa_t
     plt.figure()
     plt.title(f's:{kappa_s}, t:{kappa_t}, value:{cr_value}')
     sns.heatmap(heatmap_coranking_matrix_df)
-    plt.savefig(
-        f'../result/corank/{data_type}_{dr_type.name}_{time_stamp}.png')
+    save_path_name = f'../result/corank/{data_type}_{dr_type.name}_{time_stamp}.png'
+    os.makedirs(os.path.dirname(save_path_name), exist_ok=True)
+    plt.savefig(save_path_name)
     plt.close('all')
     plt.show()
 
